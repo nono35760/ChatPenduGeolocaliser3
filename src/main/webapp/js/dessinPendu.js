@@ -23,7 +23,7 @@ context.lineTo(55,10);
 context.stroke(); 
 break;
 	  case 3:
-// poteau horizontale potence
+// poteau horizontal potence
 context.beginPath();
 context.moveTo(55,10);
 context.lineTo(180,20);
