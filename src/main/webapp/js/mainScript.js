@@ -1,4 +1,6 @@
-var monTab = new Array();
+var monTab = new Array(); //contiendra enregistrement des coords maps 
+
+arrayLettersWord = new Array();  //contiendra les lettres du mots à trouver
 
 function findPosition(position) {
 
@@ -286,9 +288,9 @@ function appelWord2() {
 			 */
 
 			// décomposition du mot lettre par lettre
-			arrayLetters = new Array();
-			arrayLetters = wordToFind.split("");
-			alert(arrayLetters[1]); //test affiche la seconde lettre de du mot
+			
+			arrayLettersWord = wordToFind.split("");
+			alert(arrayLettersWord[1]); //test affiche la seconde lettre de du mot
 		}
 
 	}).fail(function() {
@@ -297,7 +299,7 @@ function appelWord2() {
 }
 
 function checkLetter(letter) {
-	alert(arrayLetters[1] + "(((" + letter + wordToFind.length);
+	alert(arrayLettersWord[1] + "(((" + letter + wordToFind.length);
 
 	/*
 	 * //décomposition du mot lettre par lettre var arrayLetters=new Array();
@@ -306,11 +308,11 @@ function checkLetter(letter) {
 
 	var indices = []; // enregistre les emplacements trouvés
 	var letter = 'a';
-	var idx = arrayLetters.indexOf(letter);
+	var idx = arrayLettersWord.indexOf(letter);
 	// tant que lettre trouvée, on vérifie que pas d'autres ensuite
 	while (idx != -1) {
 		indices.push(idx);
-		idx = arrayLetters.indexOf(letter, idx + 1);
+		idx = arrayLettersWord.indexOf(letter, idx + 1);
 	}
 	console.log(indices); //retourne tableau des emplacements trouvés
 	

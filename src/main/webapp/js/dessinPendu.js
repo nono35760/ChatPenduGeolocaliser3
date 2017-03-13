@@ -1,9 +1,9 @@
 function dessinePendu(etape)
 {
+	 
 	switch (etape) {
 	  case 1:
-		  var canvas  = document.querySelector('#canvas');
-			var context = canvas.getContext('2d');
+		
 
 		// pied potence
 		context.beginPath();
