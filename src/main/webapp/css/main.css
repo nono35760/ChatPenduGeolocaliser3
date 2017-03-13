@@ -1,0 +1,45 @@
+#container {
+	width: 980px;
+	margin: auto;
+	text-align: center;
+}
+
+#divLogin {
+	background-color: #FFCC33;
+	height: 50px;
+}
+
+.mapDiv {
+	float: left;
+	width: 400px;
+	height: 480px;
+	text-align: center;
+	margin: auto;
+}
+
+.theMap {
+	width: 350px;
+	height: 350px;
+	text-align: center;
+	margin: auto;
+}
+
+.theMapTxt {
+	width: 350px;
+	text-align: center;
+	margin: auto;
+}
+
+#central {
+	float: left;
+	width: 158px;
+	text-align: center;
+	margin: 10px;
+	background-color: #CCC;
+}
+
+#divReplaceCoord, #divDisplayJson, #divReplaceWord {
+	clear: both;
+	margin: auto;
+	text-align: center;
+}

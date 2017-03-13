@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>Essai Géoloc</title>
+<link rel="stylesheet" href="css/main.css">
+<script src="js/mainScript.js"></script>
+<script src="js/dessinPendu.js"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<div id="container">
+		<div id="divLogin">
+
+			<input type="text" name="login" id="login"><input type="text"
+				name="password" id="password"><input type="button"
+				value="Login"
+				onclick="saveLogin($('#login').val(),$('#password').val())"
+				class="btn btn-primary">
+
+		</div>
+		<h3>Essai de géoloc</h3>
+
+		<div>
+			<input type="button" value="Affiche ma position" onclick="run()"
+				class="btn btn-primary">
+
+		</div>
+		<br>
+		<div id="map1" class="mapDiv">
+			<div id="theMap1" class="theMap"></div>
+			<div id="theMap1Form" class="theMapTxt">
+				<input type="text" name="myLat1" id="myLat1" class="input"><br>
+				<input type="text" name="myLong1" id="myLong1"> <br> <input
+					type="button" value="Voir carte 1"
+					onclick="initMap($('#myLat1').val(),$('#myLong1').val(),'theMap1',monTab);"
+					class="btn btn-primary">
+
+			</div>
+		</div>
+		<div id="central">
+			<div id="theMap1" class="theMap"></div>
+			<div id="theMap1Form" class="theMapTxt"></div>
+		</div>
+		<div id="map2" class="mapDiv">
+			<div id="theMap2" class="theMap"></div>
+			<div id="theMap2Form" class="theMapTxt">
+				<input type="text" name="myLat2" id="myLat2"><br> <input
+					type="text" name="myLong2" id="myLong2"> <br> <input
+					type="button" value="Voir carte 2"
+					onclick="initMap($('#myLat2').val(),$('#myLong2').val(),'theMap2',monTab);"
+					class="btn btn-primary">
+			</div>
+		</div>
+
+		<div id="divReplaceCoord"></div>
+		<hr>
+		<input type="button" value="Calculer la distance"
+			onclick="findDistance($('#myLat1').val(),$('#myLong1').val(),$('#myLat2').val(),$('#myLong2').val())">
+		<hr>
+		<div id="divDisplayJson"></div>
+		<hr>
+		<div id="divDisplayJsonSave"></div>
+		<hr>
+		<div id="divReplaceWebService">Login ok ?</div>
+		<hr>
+		<div id="divReplaceWord">
+			<!-- <input type="button" value="Balance moi un mot NOW !"
+				onclick="appelWord()" class="btn btn-primary">  -->
+			<input type="button" value="Balance moi un mot 2 NOW !"
+				onclick="appelWord2()" class="btn btn-primary">
+		</div>
+		<hr>
+		<div id="divPenduTxt"></div>
+		<div id="divPenduDessin"></div>
+		<div id="divPenduForm">
+			<input type="text" id="letter" name="letter" maxlength="1" size="1"
+				onKeyUp="checkLetter($('#letter').val())">
+		</div>
+		<hr>
+		<div id="divVideo">
+
+
+
+			<video id="maVideo" controls="controls" width="200" loop autoplay>
+				<source src="videos/small.mp4" type="video/mp4" />
+			</video>
+
+			<canvas id="canvas" width="500" height="500">
+    <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
+</canvas>
+<script>
+for (var iter = 0; iter < 10; iter++) {
+	
+	dessinePendu(iter);
+}
+</script>
+
+		</div>
+	</div>
+
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPWqmKqbzoGocKQx3IlWMfBksuQuMfzIs&signed_in=true"></script>
+</body>
+</html>
