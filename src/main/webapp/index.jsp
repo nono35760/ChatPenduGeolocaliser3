@@ -4,4 +4,5 @@
 </body>
 	<h1>Eric a rajouté un titre</h1>
 	<h2>Eric est fort</h2>
+	<h3>Avec eclipse</h3>
 </html>
