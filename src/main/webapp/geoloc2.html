@@ -33,17 +33,18 @@
 	<div id="container">
 		<div id="divLogin">
 
-			<input type="text" name="login" id="login"><input type="text"
+			<input type="text" name="login" id="login"><input type="password"
 				name="password" id="password"><input type="button"
 				value="Login"
 				onclick="saveLogin($('#login').val(),$('#password').val())"
-				class="btn btn-primary">
+				class="btn btn-primary"> (riri / azerty1)
+				
 
 		</div>
 		<h3>Essai de géoloc</h3>
 
 		<div>
-			<input type="button" value="Affiche ma position" onclick="run()"
+			<input type="button" value="Afficher ma position" onclick="run()"
 				class="btn btn-primary">
 
 		</div>
@@ -86,41 +87,38 @@
 		<div id="divReplaceWebService">Login ok ?</div>
 		<hr>
 		<div id="divReplaceWord">
-			<!-- <input type="button" value="Balance moi un mot NOW !"
-				onclick="appelWord()" class="btn btn-primary">  -->
-			<input type="button" value="Balance moi un mot 2 NOW !"
+		
+			<input type="button" value="Choisir un mot pour le pendu"
 				onclick="appelWord2()" class="btn btn-primary">
 		</div>
 		<hr>
 		<div id="divPenduTxt"></div>
 		<div id="divPenduDessin"></div>
 		<div id="divPenduForm">
-			<input type="text" id="letter" name="letter" maxlength="1" size="1"
-				onKeyUp="checkLetter($('#letter').val())">
+			Saisir une lettre : <input type="text" id="letter" name="letter" maxlength="1" size="1" class="input">
+			<input type="button" value="Verifier" onclick="checkLetter($('#letter').val())" class="btn">
 		</div>
 		<hr>
+		
+		<!-- 
+		//Essai vidéo ok
 		<div id="divVideo">
-
-
-
 			<video id="maVideo" controls="controls" width="200" loop autoplay>
 				<source src="videos/small.mp4" type="video/mp4" />
 			</video>
-
-			<canvas id="canvas" width="500" height="500">
-    <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
-</canvas>
-<script>
-var canvas  = document.querySelector('#canvas');
-var context = canvas.getContext('2d');
-
-for (var iter = 0; iter < 11; iter++) {
-	console.log(iter);
-	dessinePendu(iter);
-}
-</script>
-
-		</div>
+		</div> -->
+		
+		
+		<canvas id="canvas" width="500" height="500">
+   		 <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
+		</canvas>
+		
+		<script>
+		//initialisation du canvas
+		var canvas  = document.querySelector('#canvas');
+		var context = canvas.getContext('2d');
+		</script>
+		
 	</div>
 
 	<script async defer

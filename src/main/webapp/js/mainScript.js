@@ -1,7 +1,10 @@
-var monTab = new Array(); //contiendra enregistrement des coords maps 
-
+monTab = new Array(); //contiendra enregistrement des coords maps 
 arrayLettersWord = new Array();  //contiendra les lettres du mots à trouver
+nbCoups = 0; //nombre de coups joués
+nbCoupsFoireux=0; //nombre de coups foireux (eh ouais)
+nbLettersFound=0; //nbre de lettres trouvées
 
+//trouve la position actuelle grace à la géoloc et met à jour la map1
 function findPosition(position) {
 
 	var infopos = "Ma position actuelle avec cette ip :\n";
@@ -16,7 +19,6 @@ function findPosition(position) {
 	document.getElementById("myLat1").value = position.coords.latitude;
 	document.getElementById("myLong1").value = position.coords.longitude;
 	initMap(latitude, longitude, 'theMap1');
-
 }
 
 // Fonction de callback en cas d’erreur
@@ -48,6 +50,7 @@ function run() {
 	}
 }
 
+//charge la map 1
 function initMap(latitude, longitude, divMap, monTab) {
 
 	alert(latitude + ',' + longitude);
@@ -79,6 +82,7 @@ function initMap(latitude, longitude, divMap, monTab) {
 
 }
 
+//charge la map 2
 function initMap2(latitude, longitude, divMap) {
 
 	alert(latitude + '+' + longitude + '+' + divMap);
@@ -108,10 +112,11 @@ function initMap2(latitude, longitude, divMap) {
 
 }
 
+//Calcul la distance entre les deux coordonnées saisies
 function findDistance(lat1, long1, lat2, long2) {
-	// si lat est une chaine texte, on utilise l''url sans coordonnées gps //a
-	// faire aussi pour lat2
-	if (parseFloat(lat1)) {
+	// si lat est une chaine texte, on utilise l''url sans coordonnées gps
+	//TODO faire aussi pour lat2
+	if (parseFloat(lat1)) { //format coord
 		var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='
 				+ parseFloat(lat1)
 				+ ','
@@ -121,7 +126,7 @@ function findDistance(lat1, long1, lat2, long2) {
 				+ ','
 				+ parseFloat(long2)
 				+ '+&mode=bicycling&language=fr-FR&key=AIzaSyAGNfXrvUDmgYHmKjEaBVzR_IkaHYiiopo';
-	} else {
+	} else { //format texte pour le point de départ
 		var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='
 				+ lat1
 				+ '&destinations='
@@ -132,8 +137,7 @@ function findDistance(lat1, long1, lat2, long2) {
 	}
 
 	// alert('https://maps.googleapis.com/maps/api/distancematrix/json?origins='+parseFloat(lat1)+','+parseFloat(long1)+'&destinations='+parseFloat(lat2)+','+parseFloat(long2)+'+&mode=bicycling&language=fr-FR&key=AIzaSyAGNfXrvUDmgYHmKjEaBVzR_IkaHYiiopo');
-	$
-			.ajax(
+	$.ajax(
 					{
 						// url:'https://maps.googleapis.com/maps/api/distancematrix/json?origins=47.26115180000001,-1.5829457&destinations=47.261151,-1.3829457+&mode=bicycling&language=fr-FR&key=AIzaSyAGNfXrvUDmgYHmKjEaBVzR_IkaHYiiopo',
 						url : url,
@@ -187,7 +191,7 @@ function save(latitude, longitude, monTab) {
 		document.getElementById("divDisplayJsonSave").innerHTML = monHtml;
 
 	} else {
-		alert("Pas de storage tocard !");
+		alert("Pas de storage !");
 	}
 
 }
@@ -212,12 +216,10 @@ function saveLogin(login, password) {
 
 // appelé par saveLogin
 function appelLogin(login, password) {
-	alert('tu mas appelé ?' + login + password);
-	$
-			.ajax(
-					{
+	alert('tu mas appelé ? ' + login +" / "+password);
+	$.ajax({
 
-						url : 'http://localhost:8080/rest1/rest/geoloc/geolocJson.html?login='
+						url : 'http://localhost:8080/ChatPenduGeoloc3/rest/geoloc/geolocJson.html?login='
 								+ login + '&password=' + password,
 						dataType : 'text',
 						success : function(data) {
@@ -261,25 +263,24 @@ function appelWord2() {
 
 	$.ajax({
 
-		url : 'http://localhost:8080/rest1/rest/geoloc/geolocWord2.html',
+		url : 'http://localhost:8080/ChatPenduGeoloc3/rest/geoloc/geolocWord2.html',
 		dataType : 'text',
 		success : function(data) {
-
+			console.log(data);
 			$('#divReplaceWord').html(data);
 
 			// recup du mot à trouver dans le dico
-			wordToFind = data;
-			alert("Mot à trouver"+wordToFind);
+			wordToFind = data.toLowerCase();
+			//alert("Mot à trouver : "+wordToFind);
 			
+			alert("Nombre de lettres : "+wordToFind.length)
 
-			// affichage des emplacements
-			// var textPendu="";
+			// affichage des emplacements lettres vides
 			textPendu = new Array();
 			for (i = 0; i < wordToFind.length; i++) {
-				textPendu.push("_");
+				textPendu.push("-");
 			}
-			// ###afficher les cases vides pendu
-			$('#divPenduTxt').html(textPendu.length);
+			$('#divPenduTxt').html(textPendu);
 
 			/*
 			 * if (typeof localStorage != 'undefined') {
@@ -288,9 +289,8 @@ function appelWord2() {
 			 */
 
 			// décomposition du mot lettre par lettre
-			
 			arrayLettersWord = wordToFind.split("");
-			alert(arrayLettersWord[1]); //test affiche la seconde lettre de du mot
+			//alert(arrayLettersWord[1]); //test affiche la seconde lettre de du mot
 		}
 
 	}).fail(function() {
@@ -298,25 +298,72 @@ function appelWord2() {
 	});
 }
 
+//Vérifie que la lettre saisie est dans le mot
 function checkLetter(letter) {
-	alert(arrayLettersWord[1] + "(((" + letter + wordToFind.length);
-
+	
+	
+	alert("Lettre saisie : "+letter);
+	
+	//alert(arrayLettersWord[1] + "(((" + letter + wordToFind.length);
+	
+	nbCoups++;
+	
+	//alert("nombreCoups : "+nbCoups);
+	
+	
 	/*
 	 * //décomposition du mot lettre par lettre var arrayLetters=new Array();
 	 * arrayLetters=wordToFind.split(""); alert(arrayLetters[1]);
 	 */
 
 	var indices = []; // enregistre les emplacements trouvés
-	var letter = 'a';
-	var idx = arrayLettersWord.indexOf(letter);
-	// tant que lettre trouvée, on vérifie que pas d'autres ensuite
-	while (idx != -1) {
-		indices.push(idx);
-		idx = arrayLettersWord.indexOf(letter, idx + 1);
+	
+	//on vérifie que la lettre saisie fait partie du mot
+	var indexVerif = arrayLettersWord.indexOf(letter);
+	
+	
+	if(indexVerif==-1 ) 
+	{
+		//la lettre n'a pas été trouvée, on dessine un nouvel élément du pendu
+		nbCoupsFoireux++;
+		dessinePendu(nbCoupsFoireux);
+		
+		if(nbCoupsFoireux>=10) 
+		{
+			alert('Tu as perdu, dommage !');
+			$('#divPenduForm').html("<h1>Perdu</h1>");
+		}
 	}
-	console.log(indices); //retourne tableau des emplacements trouvés
+	else
+	{
+		
+		
+		
+		// la lettre est bien présente dans le mot, on vérifie que pas d'autres lettres ensuite
+	
+		while (indexVerif >= 0) {
+			
+			//#########TODO vérif pas saisi deux fois la meme lettre
+			nbLettersFound++;
+			
+			alert("La lettre fais partie du mot");
+			indices.push(indexVerif);
+			
+			textPendu[indexVerif]=letter;
+			console.log("indexVerif : "+(indexVerif));
+			indexVerif = arrayLettersWord.indexOf(letter, indexVerif + 1);
+		}
+	}
+	if(nbLettersFound==wordToFind.length) 
+	{
+		alert('Gagné');
+		$('#divPenduForm').html("<h1>Gagné !</h1>");
+	}
+	
+	$('#divPenduTxt').html(textPendu);
+	
+	console.log("indices "+indices); //retourne tableau des emplacements trouvés pour la lettre
 	
 }
 
 // clé matrix api AIzaSyAGNfXrvUDmgYHmKjEaBVzR_IkaHYiiopo
-// https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyAGNfXrvUDmgYHmKjEaBVzR_IkaHYiiopo
